@@ -35,7 +35,7 @@ async function getPortfolios() {
         portfoliosWithTwitterInfo.push(portfolio);
     }
 
-    return portfolios;
+    return portfoliosWithTwitterInfo;
 }
 
 async function getPortfolio(id) {
