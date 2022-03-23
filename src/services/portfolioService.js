@@ -4,11 +4,11 @@ const twitterGateway = require('../gateways/twitterGateway/twitterGateway');
 
 const dynamodb = new aws.DynamoDB.DocumentClient();
 
-async function createPortfolio(name, description, birthdate, twitterUsername) {
+async function createPortfolio(portfolioName, description, birthdate, twitterUsername) {
     const id = v4();
     const newPortfolio = {
         id,
-        name,
+        portfolioName,
         description,
         birthdate,
         twitterUsername,
@@ -44,17 +44,20 @@ async function getPortfolio(id) {
         Key: { id }
     }).promise();
 
-    const portfolio = result.Item;
+    const portfolio = { ...result.Item };
+    const timeline = await twitterGateway.getTimeline(portfolio.twitterUsername, 5);
+    portfolio.timeline = timeline;
+
     return portfolio;
 }
 
-async function updatePortfolio(id, name, description, birthdate, twitterUsername) {
+async function updatePortfolio(id, portfolioName, description, birthdate, twitterUsername) {
     await dynamodb.update({
         TableName: 'PortfolioTable',
         Key: { id },
-        UpdateExpression: 'set name = :name, description = :description, birthdate = :birthdate, twitterUsername = :twitterUsername',
+        UpdateExpression: 'set portfolioName = :portfolioName, description = :description, birthdate = :birthdate, twitterUsername = :twitterUsername',
         ExpressionAttributeValues: {
-            ':name': name,
+            ':portfolioName': portfolioName,
             ':description': description,
             ':birthdate': birthdate,
             ':twitterUsername': twitterUsername,

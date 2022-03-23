@@ -3,16 +3,16 @@ const portfolioService = require('../services/portfolioService');
 
 const createPortfolio = async (event) => {
     const params = JSON.parse(event.body);
-    const { name, description, birthdate, twitterUsername } = params;
+    const { portfolioName, description, birthdate, twitterUsername } = params;
     
-    if (!name || !description || !birthdate || !twitterUsername) {
+    if (!portfolioName || !description || !birthdate || !twitterUsername) {
         return {
             statusCode: BAD_REQUEST,
             body: 'One or more fields are missing.'
         };
     }
 
-    await portfolioService.createPortfolio(name, description, birthdate, twitterUsername);
+    await portfolioService.createPortfolio(portfolioName, description, birthdate, twitterUsername);
 
     return {
         status: OK,
@@ -42,8 +42,8 @@ const getPortfolio = async (event) => {
 const updatePortfolio = async (event) => {
     const { id } = event.pathParameters;
     const params = JSON.parse(event.body);
-    const { name, description, birthdate, twitterUsername } = params;
-    await portfolioService.updatePortfolios(id, name, description, birthdate, twitterUsername);
+    const { portfolioName, description, birthdate, twitterUsername } = params;
+    await portfolioService.updatePortfolio(id, portfolioName, description, birthdate, twitterUsername);
 
     return {
         status: OK,
