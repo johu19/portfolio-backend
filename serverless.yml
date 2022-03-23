@@ -19,6 +19,18 @@ functions:
       - httpApi:
           path: /ping
           method: get
+  createPortfolio:
+    handler: src/handlers/portfolioHandler.createPortfolio
+    events:
+      - httpApi:
+          path: /portfolio
+          method: post
+  getPortfolios:
+    handler: src/handlers/portfolioHandler.getPortfolios
+    events:
+      - httpApi:
+          path: /portfolio
+          method: get
 
 resources:
   Resources:

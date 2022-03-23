@@ -1,15 +1,12 @@
-"use strict";
+const { OK } = require('http-status-codes');
 
-module.exports.health = async (event) => {
+const health = async () => {
   return {
-    statusCode: 200,
-    body: JSON.stringify(
-      {
-        message: "Pong",
-        input: event,
-      },
-      null,
-      2
-    ),
+    status: OK,
+    body: 'Pong'
   };
 };
+
+module.exports = {
+  health
+}
