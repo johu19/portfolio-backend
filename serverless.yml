@@ -13,11 +13,11 @@ provider:
         - arn:aws:dynamodb:us-east-2:179540755677:table/PortfolioTable
 
 functions:
-  hello:
-    handler: handler.hello
+  health:
+    handler: src/handlers/healthHandler.health
     events:
       - httpApi:
-          path: /
+          path: /ping
           method: get
 
 resources:

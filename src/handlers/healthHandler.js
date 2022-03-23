@@ -1,11 +1,11 @@
 "use strict";
 
-module.exports.hello = async (event) => {
+module.exports.health = async (event) => {
   return {
     statusCode: 200,
     body: JSON.stringify(
       {
-        message: "Hello world !",
+        message: "Pong",
         input: event,
       },
       null,
