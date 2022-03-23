@@ -29,7 +29,7 @@ functions:
     handler: src/handlers/portfolioHandler.getPortfolios
     events:
       - httpApi:
-          path: /portfolios
+          path: /portfolio
           method: get
   getPortfolio:
     handler: src/handlers/portfolioHandler.getPortfolio

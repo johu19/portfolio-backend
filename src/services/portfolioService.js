@@ -26,11 +26,14 @@ async function getPortfolios() {
     }).promise();
 
     const portfolios = result.Items;
+    const portfoliosWithTwitterInfo = [];
 
-    portfolios.forEach(async (portfolio) => {
+    for (let i = 0; i < portfolios.length; i += 1) {
+        const portfolio = { ...portfolios[i] };
         const timeline = await twitterGateway.getTimeline(portfolio.twitterUsername, 5);
         portfolio.timeline = timeline || 'no se encontro timeline';
-    });
+        portfoliosWithTwitterInfo.push(portfolio);
+    }
 
     return portfolios;
 }
