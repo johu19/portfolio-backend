@@ -29,7 +29,31 @@ const getPortfolios = async () => {
     };
 }
 
+const getPortfolio = async (event) => {
+    const { id } = event.pathParameters;
+    const portfolio = await portfolioService.getPortfolio(id);
+
+    return {
+        status: OK,
+        body: portfolio
+    };
+}
+
+const updatePortfolio = async (event) => {
+    const { id } = event.pathParameters;
+    const params = JSON.parse(event.body);
+    const { name, description, birthdate, twitterUsername } = params;
+    await portfolioService.updatePortfolios(id, name, description, birthdate, twitterUsername);
+
+    return {
+        status: OK,
+        body: 'Porfolio updated successfully'
+    };
+}
+
 module.exports = {
   createPortfolio,
-  getPortfolios, 
+  getPortfolios,
+  getPortfolio,
+  updatePortfolio,
 }

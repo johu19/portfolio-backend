@@ -4,13 +4,13 @@ frameworkVersion: '3'
 provider:
   name: aws
   runtime: nodejs14.x
-  region: us-east-2
+  region: us-west-2
   iamRoleStatements:
     - Effect: Allow
       Action:
         - dynamodb:*
       Resource:
-        - arn:aws:dynamodb:us-east-2:179540755677:table/PortfolioTable
+        - arn:aws:dynamodb:us-west-2:179540755677:table/PortfolioTable
 
 functions:
   health:
@@ -29,8 +29,20 @@ functions:
     handler: src/handlers/portfolioHandler.getPortfolios
     events:
       - httpApi:
-          path: /portfolio
+          path: /portfolios
           method: get
+  getPortfolio:
+    handler: src/handlers/portfolioHandler.getPortfolio
+    events:
+      - httpApi:
+          path: /portfolio/{id}
+          method: get
+  updatePortfolio:
+    handler: src/handlers/portfolioHandler.updatePortfolio
+    events:
+      - httpApi:
+          path: /portfolio/{id}
+          method: patch
 
 resources:
   Resources:

@@ -35,7 +35,34 @@ async function getPortfolios() {
     return portfolios;
 }
 
+async function getPortfolio(id) {
+    const result = await dynamodb.get({
+        TableName: 'PortfolioTable',
+        Key: { id }
+    }).promise();
+
+    const portfolio = result.Item;
+    return portfolio;
+}
+
+async function updatePortfolio(id, name, description, birthdate, twitterUsername) {
+    await dynamodb.update({
+        TableName: 'PortfolioTable',
+        Key: { id },
+        UpdateExpression: 'set name = :name, description = :description, birthdate = :birthdate, twitterUsername = :twitterUsername',
+        ExpressionAttributeValues: {
+            ':name': name,
+            ':description': description,
+            ':birthdate': birthdate,
+            ':twitterUsername': twitterUsername,
+        },
+        ReturnValues: 'ALL_NEW',
+    }).promise();
+}
+
 module.exports = {
   createPortfolio,
   getPortfolios,
+  getPortfolio,
+  updatePortfolio,
 }
