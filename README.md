@@ -5,3 +5,4 @@ Tech stack:
   - DynamoDB
 Things to improve:
   - Using middlewares for error handling, security and json parsing
+  - Query params for get methods to allow pagination, filters, etc
