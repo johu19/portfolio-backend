@@ -44,14 +44,25 @@ async function getPortfolio(id) {
         Key: { id }
     }).promise();
 
-    const portfolio = { ...result.Item };
-    const timeline = await twitterGateway.getTimeline(portfolio.twitterUsername, 5);
-    portfolio.timeline = timeline;
-
-    return portfolio;
+    if (result.Item) {
+        const portfolio = result.Item;
+        portfolio.timeline = await twitterGateway.getTimeline(portfolio.twitterUsername, 5);
+        return portfolio;
+    } else {
+        throw `Portfolio with id: ${id} was not found.`;
+    }
 }
 
 async function updatePortfolio(id, portfolioName, description, birthdate, twitterUsername) {
+    const result = await dynamodb.get({
+        TableName: 'PortfolioTable',
+        Key: { id }
+    }).promise();
+
+    if (!result.Item) {
+        throw `Portfolio with id: ${id} was not found.`;
+    }
+
     await dynamodb.update({
         TableName: 'PortfolioTable',
         Key: { id },
@@ -62,7 +73,7 @@ async function updatePortfolio(id, portfolioName, description, birthdate, twitte
             ':birthdate': birthdate,
             ':twitterUsername': twitterUsername,
         },
-        ReturnValues: 'ALL_NEW',
+        ReturnValues: 'NONE'
     }).promise();
 }
 

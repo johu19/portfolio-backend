@@ -31,24 +31,36 @@ const getPortfolios = async () => {
 
 const getPortfolio = async (event) => {
     const { id } = event.pathParameters;
-    const portfolio = await portfolioService.getPortfolio(id);
-
-    return {
-        status: OK,
-        body: portfolio
-    };
+    try {
+        const portfolio = await portfolioService.getPortfolio(id);
+        return {
+            status: OK,
+            body: portfolio
+        };
+    } catch (error) {
+        return {
+            status: BAD_REQUEST,
+            body: JSON.stringify(error)
+        };
+    }
 }
 
 const updatePortfolio = async (event) => {
     const { id } = event.pathParameters;
     const params = JSON.parse(event.body);
     const { portfolioName, description, birthdate, twitterUsername } = params;
-    await portfolioService.updatePortfolio(id, portfolioName, description, birthdate, twitterUsername);
-
-    return {
-        status: OK,
-        body: 'Porfolio updated successfully'
-    };
+    try {
+        await portfolioService.updatePortfolio(id, portfolioName, description, birthdate, twitterUsername);
+        return {
+            status: OK,
+            body: 'Porfolio updated successfully'
+        };   
+    } catch (error) {
+        return {
+            status: BAD_REQUEST,
+            body: JSON.stringify(error)
+        };
+    }
 }
 
 module.exports = {
