@@ -16,7 +16,7 @@ const createPortfolio = async (event) => {
 
     return {
         status: OK,
-        body: 'Portfolio created successfully'
+        body: 'Portfolio created successfully.'
     };
 };
 
@@ -25,7 +25,7 @@ const getPortfolios = async () => {
 
     return {
         status: OK,
-        body: { portfolios }
+        body: { portfolios },
     };
 }
 
@@ -35,12 +35,12 @@ const getPortfolio = async (event) => {
         const portfolio = await portfolioService.getPortfolio(id);
         return {
             status: OK,
-            body: portfolio
+            body: portfolio,
         };
     } catch (error) {
         return {
             status: BAD_REQUEST,
-            body: JSON.stringify(error)
+            body: JSON.stringify(error),
         };
     }
 }
@@ -53,7 +53,7 @@ const updatePortfolio = async (event) => {
         await portfolioService.updatePortfolio(id, portfolioName, description, birthdate, twitterUsername);
         return {
             status: OK,
-            body: 'Porfolio updated successfully'
+            body: 'Porfolio updated successfully.'
         };   
     } catch (error) {
         return {
