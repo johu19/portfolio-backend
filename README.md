@@ -10,3 +10,6 @@ Things to improve:
   - Query params for get methods to allow pagination, filters, etc
   - Implementation of unit tests
   - Option to receive an user portfolio image and save it in aws (s3)
+
+
+The Postman collection to tests endpoints can be found here: https://drive.google.com/file/d/1Gt-x3qz5voYKnPiWZRK32tYDHhIW6kjO/view?usp=sharing
